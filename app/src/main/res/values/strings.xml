@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">RA1_somativa</string>
+    <string name="passwordEditText">Senha</string>
+    <string name="confirmPasswordEditText">Confirmar senha</string>
+    <string name="registerButton">Cadastrar</string>
+    <string name="emailEditText">E-mail</string>
+    <string name="usernameEditText">Nome completo</string>
+    <string name="registerText">Cadastre-se!</string>
+    <string name="loginText">Bem-vindo!</string>
+    <string name="loginButton">Entrar</string>
+    <string name="goToLogin">Clique aqui!</string>
+    <string name="goToLoginTextview">Já possui cadastro?</string>
+    <string name="goToSignUpTextview">Não possui cadastro?</string>
+    <string name="goToSignUp">Cadastre-se aqui!</string>
+    <string name="meal">Meal</string>
+</resources>
