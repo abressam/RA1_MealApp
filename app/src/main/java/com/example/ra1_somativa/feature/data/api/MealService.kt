@@ -17,8 +17,23 @@ internal class MealService {
         mealApi = retrofit.create(MealApi::class.java)
     }
 
-    suspend fun getDataFromApi(): List<Meal> {
-        return mealApi.getMeal().meals // chamada da API
+    suspend fun getMealsByCategory(category: String): List<Meal> {
+        return when (category) {
+            "Beef" -> mealApi.getBeefCategory().meals
+            "Chicken" -> mealApi.getChickenCategory().meals
+            "Dessert" -> mealApi.getDessertCategory().meals
+            "Lamb" -> mealApi.getLambCategory().meals
+            "Miscellaneous" -> mealApi.getMiscellaneousCategory().meals
+            "Pasta" -> mealApi.getPastaCategory().meals
+            "Pork" -> mealApi.getPorkCategory().meals
+            "Seafood" -> mealApi.getSeafoodCategory().meals
+            "Starter" -> mealApi.getStarterCategory().meals
+            "Vegan" -> mealApi.getVeganCategory().meals
+            "Vegetarian" -> mealApi.getVegetarianCategory().meals
+            "Breakfast" -> mealApi.getBreakfastCategory().meals
+            "Goat" -> mealApi.getGoatCategory().meals
+            else -> emptyList()
+        }
     }
 
     private companion object {

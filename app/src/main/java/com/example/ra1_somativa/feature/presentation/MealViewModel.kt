@@ -17,10 +17,10 @@ class MealViewModel : ViewModel() {
     val mealListInfo: LiveData<List<Meal>>
         get() = _mealListInfo
 
-    fun fetchData() {
+    fun fetchDataByCategory(category: String) {
         viewModelScope.launch() {
             try {
-                val data = mealService.getDataFromApi()
+                val data = mealService.getMealsByCategory(category)
                 _mealListInfo.value = data
             } catch (e: Exception) {
                 // Handle error or show error message

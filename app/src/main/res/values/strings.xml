@@ -13,4 +13,17 @@
     <string name="goToSignUpTextview">Não possui cadastro?</string>
     <string name="goToSignUp">Cadastre-se aqui!</string>
     <string name="meal">Meal</string>
+    <string name="goat">Goat</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="vegan">Vegan</string>
+    <string name="starter">Starter</string>
+    <string name="seafood">Seafood</string>
+    <string name="pork">Pork</string>
+    <string name="pasta">Pasta</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="lamb">Lamb</string>
+    <string name="dessert">Dessert</string>
+    <string name="chicken">Chicken</string>
+    <string name="beef">Beef</string>
 </resources>
