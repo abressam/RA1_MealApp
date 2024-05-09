@@ -26,4 +26,9 @@
     <string name="dessert">Dessert</string>
     <string name="chicken">Chicken</string>
     <string name="beef">Beef</string>
+    <string name="side">Side</string>
+    <string name="instructions_details">Preheat oven to 350° F. Spray a 9x13-inch baking pan with non-stick spray.\\r\\nCombine soy sauce Enjoy!</string>
+    <string name="back">Back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

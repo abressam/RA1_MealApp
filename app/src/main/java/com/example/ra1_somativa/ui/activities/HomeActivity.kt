@@ -7,10 +7,12 @@ import com.example.ra1_somativa.R
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ra1_somativa.databinding.ActivityHomeBinding
+import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.feature.presentation.MealViewModel
 import com.example.ra1_somativa.ui.adapter.MealAdapter
+import android.content.Intent
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: MealViewModel by viewModels()
@@ -24,6 +26,7 @@ class HomeActivity : AppCompatActivity() {
         R.id.categoryPastaButton to "Pasta",
         R.id.categoryPorkButton to "Pork",
         R.id.categorySeafoodButton to "Seafood",
+        R.id.categorySideButton to "Side",
         R.id.categoryStarterButton to "Starter",
         R.id.categoryVeganButton to "Vegan",
         R.id.categoryVegetarianButton to "Vegetarian",
@@ -38,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val recyclerView = binding.recycleView
-        val adapter = MealAdapter()
+        val adapter = MealAdapter(this)
 
         val layoutManager = GridLayoutManager(this, 2)
 
@@ -62,14 +65,20 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onItemClick(meal: Meal) {
+        val intent = Intent(this, MealDetailsActivity::class.java)
+        intent.putExtra("mealId", meal.idMeal)
+        startActivity(intent)
+    }
+
     // Método para selecionar um botão específico
     private fun selectButton(buttonId: Int) {
         categoryButtonMap.keys.forEach { id ->
             val button = getButtonById(id)
             if (id == buttonId) {
-                button.setBackgroundResource(R.drawable.selected_button_background)
+                button.setBackgroundResource(R.color.selected_button_border_color)
             } else {
-                button.setBackgroundResource(R.drawable.default_button_background)
+                button.setBackgroundResource(R.color.black)
             }
         }
     }
@@ -85,6 +94,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.categoryPastaButton -> binding.categoryPastaButton
             R.id.categoryPorkButton -> binding.categoryPorkButton
             R.id.categorySeafoodButton -> binding.categorySeafoodButton
+            R.id.categorySideButton -> binding.categorySideButton
             R.id.categoryStarterButton -> binding.categoryStarterButton
             R.id.categoryVeganButton -> binding.categoryVeganButton
             R.id.categoryVegetarianButton -> binding.categoryVegetarianButton

@@ -9,14 +9,20 @@ import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.R
 import coil.load
 
-class MealAdapter : RecyclerView.Adapter<MealViewHolder>() {
+class MealAdapter (
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<MealViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(meal: Meal)
+    }
 
     private var listMeal: List<Meal> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
-            val binding = CustomGridLayoutBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-        return MealViewHolder(binding)
+        val binding = CustomGridLayoutBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+    return MealViewHolder(binding, listener)
     }
 
     override fun getItemCount(): Int = listMeal.size
@@ -35,16 +41,20 @@ class MealAdapter : RecyclerView.Adapter<MealViewHolder>() {
 }
 
 class MealViewHolder (
-    private val binding: CustomGridLayoutBinding
+    private val binding: CustomGridLayoutBinding,
+    private val listener: MealAdapter.OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind (meal: Meal) {
         binding.apply {
             mealName.text = meal.strMeal
-            // Carrega a imagem da refeição utilizando o Coil
             mealImage.load(meal.strMealThumb) {
-                crossfade(true) // Aplica um efeito de transição suave ao carregar a imagem
-                placeholder(R.drawable.ic_launcher_foreground) // Exibe um placeholder enquanto a imagem está sendo carregada
-                error(com.google.android.material.R.drawable.mtrl_ic_error) // Exibe uma imagem de erro em caso de falha no carregamento
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_foreground)
+                error(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
+
+            itemView.setOnClickListener {
+                listener.onItemClick(meal)
             }
         }
     }

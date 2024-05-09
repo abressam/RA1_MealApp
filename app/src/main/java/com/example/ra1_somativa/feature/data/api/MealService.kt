@@ -1,6 +1,7 @@
 package com.example.ra1_somativa.feature.data.api
 
 import com.example.ra1_somativa.feature.data.model.Meal
+import com.example.ra1_somativa.feature.data.model.MealDetails
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -18,22 +19,11 @@ internal class MealService {
     }
 
     suspend fun getMealsByCategory(category: String): List<Meal> {
-        return when (category) {
-            "Beef" -> mealApi.getBeefCategory().meals
-            "Chicken" -> mealApi.getChickenCategory().meals
-            "Dessert" -> mealApi.getDessertCategory().meals
-            "Lamb" -> mealApi.getLambCategory().meals
-            "Miscellaneous" -> mealApi.getMiscellaneousCategory().meals
-            "Pasta" -> mealApi.getPastaCategory().meals
-            "Pork" -> mealApi.getPorkCategory().meals
-            "Seafood" -> mealApi.getSeafoodCategory().meals
-            "Starter" -> mealApi.getStarterCategory().meals
-            "Vegan" -> mealApi.getVeganCategory().meals
-            "Vegetarian" -> mealApi.getVegetarianCategory().meals
-            "Breakfast" -> mealApi.getBreakfastCategory().meals
-            "Goat" -> mealApi.getGoatCategory().meals
-            else -> emptyList()
-        }
+        return mealApi.getMealByCategory(category).meals
+    }
+
+    suspend fun getMealId(id: String): List<MealDetails> {
+        return mealApi.getMealById(id).meals
     }
 
     private companion object {

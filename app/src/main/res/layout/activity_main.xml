@@ -111,13 +111,13 @@
 
         <Button
             android:id="@+id/goToLoginButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/white"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
             android:text="@string/goToLogin"
             android:textColor="@color/black"
-            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="@+id/textView"
