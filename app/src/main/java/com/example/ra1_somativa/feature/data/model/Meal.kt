@@ -5,8 +5,8 @@ import com.squareup.moshi.Json
 
 data class Meal (
     @SerializedName("idMeal") val idMeal: String,
-    @SerializedName("strMeal") val strMeal: String,
-    @SerializedName("strMealThumb") val strMealThumb: String
+    @SerializedName("strMeal") var strMeal: String,
+    @SerializedName("strMealThumb") var strMealThumb: String
 )
 
 data class MealResponse(

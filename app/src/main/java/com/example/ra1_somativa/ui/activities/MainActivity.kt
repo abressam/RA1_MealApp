@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Usuário já existe na base: ${existingUser.name}, ${existingUser.email}")
             } else {
                 val newUser = User(
-                    name,
-                    email,
-                    password
+                    name = name,
+                    email = email,
+                    password = password
                 )
 
                 userViewModel.insert(newUser)

@@ -13,19 +13,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RA1_somativa"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.FavoriteActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.MealDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.HomeActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

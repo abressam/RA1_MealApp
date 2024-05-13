@@ -1,5 +1,6 @@
 package com.example.ra1_somativa.ui.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,11 +12,19 @@ import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.feature.presentation.MealViewModel
 import com.example.ra1_somativa.ui.adapter.MealAdapter
 import android.content.Intent
+import com.example.ra1_somativa.feature.data.application.UserApplication
+import com.example.ra1_somativa.feature.data.model.UserDataManager
+import com.example.ra1_somativa.feature.presentation.UserViewModel
+import com.example.ra1_somativa.feature.presentation.UserViewModelFactory
 
 class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: MealViewModel by viewModels()
+    private lateinit var userEmail: String
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModelFactory((application as UserApplication).repository)
+    }
 
     private val categoryButtonMap = mapOf(
         R.id.categoryBeefButton to "Beef",
@@ -40,6 +49,18 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userEmail = intent.getStringExtra("email") ?: ""
+
+        if (userEmail != null) {
+            userViewModel.getUserByEmail(userEmail).observe(this) { user ->
+                user?.let {
+                    val userId = user.userId ?: -1L
+
+                    UserDataManager.setUserId(userId)
+                }
+            }
+        }
+
         val recyclerView = binding.recycleView
         val adapter = MealAdapter(this)
 
@@ -50,6 +71,11 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
         selectButton(R.id.categoryBeefButton)
         viewModel.fetchDataByCategory("Beef")
+
+        binding.favoriteButton.setOnClickListener {
+            val intent = Intent(this, FavoriteActivity::class.java)
+            startActivity(intent)
+        }
 
         categoryButtonMap.forEach { (buttonId, category) ->
             val button = getButtonById(buttonId)
@@ -67,7 +93,12 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
     override fun onItemClick(meal: Meal) {
         val intent = Intent(this, MealDetailsActivity::class.java)
-        intent.putExtra("mealId", meal.idMeal)
+        val bundle = Bundle()
+
+        bundle.putString("mealId", meal.idMeal)
+        bundle.putString("email", userEmail)
+
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 
@@ -76,7 +107,7 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
         categoryButtonMap.keys.forEach { id ->
             val button = getButtonById(id)
             if (id == buttonId) {
-                button.setBackgroundResource(R.color.selected_button_border_color)
+                button.setBackgroundResource(R.color.white)
             } else {
                 button.setBackgroundResource(R.color.black)
             }

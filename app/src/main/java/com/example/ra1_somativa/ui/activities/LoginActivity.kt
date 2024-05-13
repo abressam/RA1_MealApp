@@ -65,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
         userViewModel.getUserByEmail(email).observe(this) { user ->
             if (user != null && user.password == password) {
                 val intent = Intent(this, HomeActivity::class.java)
+                intent.putExtra("email", email)
                 startActivity(intent)
                 finish()
             } else {

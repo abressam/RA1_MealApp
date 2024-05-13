@@ -1,0 +1,50 @@
+package com.example.ra1_somativa.ui.adapter
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.example.ra1_somativa.databinding.CustomListLayoutBinding
+import com.example.ra1_somativa.feature.data.model.Meal
+import com.example.ra1_somativa.R
+import android.util.Log
+
+class FavoriteMealAdapter : RecyclerView.Adapter<FavoriteMealViewHolder>() {
+
+    private var listMeal: List<Meal> = emptyList()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMealViewHolder {
+        val binding = CustomListLayoutBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return FavoriteMealViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int = listMeal.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(mealList: List<Meal>) {
+        this.listMeal = mealList
+        notifyDataSetChanged()
+    }
+
+    override fun onBindViewHolder(holder: FavoriteMealViewHolder, position: Int) {
+        val meal = listMeal[position]
+        Log.d("FavoriteMealAdapter", "Bind item na posição: $position, meal: $meal")
+        holder.bind(meal)
+    }
+}
+
+class FavoriteMealViewHolder(
+    private val binding: CustomListLayoutBinding
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(meal: Meal) {
+        binding.apply {
+            mealName.text = meal.strMeal
+            mealImage.load(meal.strMealThumb) {
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_foreground)
+                error(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
+        }
+    }
+}
