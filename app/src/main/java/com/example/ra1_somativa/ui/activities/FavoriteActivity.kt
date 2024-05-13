@@ -1,5 +1,6 @@
 package com.example.ra1_somativa.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.ra1_somativa.databinding.ActivityFavoriteBinding
 import com.example.ra1_somativa.feature.data.application.UserApplication
+import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.feature.data.model.MealDetails
 import com.example.ra1_somativa.feature.data.model.UserDataManager
 import com.example.ra1_somativa.feature.presentation.FavoriteMealViewModel
@@ -15,7 +17,7 @@ import com.example.ra1_somativa.feature.presentation.FavoriteMealViewModelFactor
 import com.example.ra1_somativa.feature.presentation.MealViewModel
 import com.example.ra1_somativa.ui.adapter.FavoriteMealAdapter
 
-class FavoriteActivity : AppCompatActivity() {
+class FavoriteActivity : AppCompatActivity(), FavoriteMealAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityFavoriteBinding
     private val viewModel: MealViewModel by viewModels()
@@ -29,7 +31,7 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val recyclerView = binding.recycleView
-        val adapter = FavoriteMealAdapter()
+        val adapter = FavoriteMealAdapter(this)
 
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -54,5 +56,15 @@ class FavoriteActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onItemClick(meal: Meal) {
+        val intent = Intent(this, MealDetailsActivity::class.java)
+        val bundle = Bundle()
+
+        bundle.putString("mealId", meal.idMeal)
+
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }

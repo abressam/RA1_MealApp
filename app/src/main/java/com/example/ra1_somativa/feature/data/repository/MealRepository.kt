@@ -11,6 +11,15 @@ class MealRepository (private val mealDao: MealDao) {
     }
 
     @WorkerThread
+    suspend fun deleteFavoriteMeal(mealIdApi: String) {
+        mealDao.deleteFavoriteMeal(mealIdApi)
+    }
+
+    suspend fun isMealFavorite(mealIdApi: String): Boolean {
+        return mealDao.isMealFavorite(mealIdApi)
+    }
+
+    @WorkerThread
     suspend fun insertMeal(mealEntity: MealEntity) {
         return mealDao.insertMeal(mealEntity)
     }

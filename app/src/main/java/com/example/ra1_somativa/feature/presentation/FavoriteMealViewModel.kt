@@ -11,18 +11,38 @@ import com.example.ra1_somativa.feature.data.model.Meal
 import android.util.Log
 import com.example.ra1_somativa.feature.data.model.MealDetails
 import com.example.ra1_somativa.feature.data.api.MealService
+import com.example.ra1_somativa.feature.data.model.UserDataManager
 import kotlinx.coroutines.launch
 
 class FavoriteMealViewModel (
     private val repository: MealRepository,
 ) : ViewModel() {
     private val mealService = MealService()
+    private val userId = UserDataManager.getUserId() ?: -1L
 
     private val _mealsLiveData = MutableLiveData<List<Meal>>()
     val mealsLiveData: LiveData<List<Meal>> get() = _mealsLiveData
 
     fun insertMeal(mealEntity: MealEntity) = viewModelScope.launch {
         repository.insertMeal(mealEntity)
+    }
+
+    private val _isMealLiked = MutableLiveData<Boolean>()
+    val isMealLiked: LiveData<Boolean> get() = _isMealLiked
+
+    fun toggleMealFavoriteStatus(mealIdApi: String) {
+        viewModelScope.launch {
+            val isFavorite = repository.isMealFavorite(mealIdApi)
+            if (isFavorite) {
+                repository.deleteFavoriteMeal(mealIdApi)
+                _isMealLiked.postValue(false)
+            } else {
+                // Suponha que você tenha uma instância de MealEntity para adicionar como favorita
+                val meal = MealEntity(mealIdApi = mealIdApi, userId = userId) // Defina o userId conforme necessário
+                repository.insertMeal(meal)
+                _isMealLiked.postValue(true)
+            }
+        }
     }
 
     fun getMealsByUserId(userId: Long) {

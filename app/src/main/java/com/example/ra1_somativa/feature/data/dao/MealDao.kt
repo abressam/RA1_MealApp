@@ -15,7 +15,7 @@ interface MealDao {
     fun getMealsByUserId(userId: Long): Flow<List<MealEntity>>
 
     @Query("DELETE FROM meals WHERE mealIdApi = :mealIdApi")
-    suspend fun deleteMeal(mealIdApi: String)
+    suspend fun deleteFavoriteMeal(mealIdApi: String)
 
     @Query("SELECT EXISTS (SELECT 1 FROM meals WHERE mealIdApi = :mealIdApi)")
     suspend fun isMealFavorite(mealIdApi: String): Boolean

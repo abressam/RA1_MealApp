@@ -10,13 +10,19 @@ import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.R
 import android.util.Log
 
-class FavoriteMealAdapter : RecyclerView.Adapter<FavoriteMealViewHolder>() {
+class FavoriteMealAdapter (
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<FavoriteMealViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(meal: Meal)
+    }
 
     private var listMeal: List<Meal> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMealViewHolder {
         val binding = CustomListLayoutBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavoriteMealViewHolder(binding)
+        return FavoriteMealViewHolder(binding, listener)
     }
 
     override fun getItemCount(): Int = listMeal.size
@@ -35,7 +41,8 @@ class FavoriteMealAdapter : RecyclerView.Adapter<FavoriteMealViewHolder>() {
 }
 
 class FavoriteMealViewHolder(
-    private val binding: CustomListLayoutBinding
+    private val binding: CustomListLayoutBinding,
+    private val listener: FavoriteMealAdapter.OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(meal: Meal) {
         binding.apply {
@@ -44,6 +51,10 @@ class FavoriteMealViewHolder(
                 crossfade(true)
                 placeholder(R.drawable.ic_launcher_foreground)
                 error(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
+
+            itemView.setOnClickListener {
+                listener.onItemClick(meal)
             }
         }
     }
