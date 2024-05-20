@@ -8,10 +8,12 @@
 
     <SearchView
         android:id="@+id/searchMeal"
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
         android:layout_height="45dp"
-        android:backgroundTint="@color/purple"
+        android:layout_margin="20dp"
+        android:queryHint="Search by first letter..."
+        android:background="@drawable/search_view_bd"
+        android:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +28,7 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/categories"
         android:textColor="@color/black"
+        android:textFontWeight="700"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -201,6 +204,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on"
         app:tint="@null" />
+
+    <TextView
+        android:id="@+id/emptyTextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/select_category"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
+        android:justificationMode="inter_word"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/horizontalButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

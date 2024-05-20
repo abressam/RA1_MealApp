@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
@@ -20,7 +21,6 @@ import com.example.ra1_somativa.ui.adapter.FavoriteMealAdapter
 class FavoriteActivity : AppCompatActivity(), FavoriteMealAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityFavoriteBinding
-    private val viewModel: MealViewModel by viewModels()
     private val favoriteMeal: FavoriteMealViewModel by viewModels {
         FavoriteMealViewModelFactory((application as UserApplication).mealRepository)
     }
@@ -48,6 +48,7 @@ class FavoriteActivity : AppCompatActivity(), FavoriteMealAdapter.OnItemClickLis
             favoriteMeal.mealsLiveData.observe(this) { meals  ->
                 Log.d("FavoriteActivity", "Refeições observadas na FavoriteActivity: $meals")
                 adapter.updateList(meals)
+                toggleEmptyMessage(meals.isEmpty())
             }
         } else {
             Log.d("MainActivity", "User ID não encontrado")
@@ -66,5 +67,9 @@ class FavoriteActivity : AppCompatActivity(), FavoriteMealAdapter.OnItemClickLis
 
         intent.putExtras(bundle)
         startActivity(intent)
+    }
+
+    private fun toggleEmptyMessage(isEmpty: Boolean) {
+        binding.emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }

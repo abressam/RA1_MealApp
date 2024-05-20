@@ -2,6 +2,7 @@ package com.example.ra1_somativa.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -49,7 +50,7 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         userEmail = intent.getStringExtra("email") ?: ""
@@ -91,10 +92,12 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
         viewModel.mealListInfo.observe(this) { meals ->
             adapter.updateList(meals)
+            toggleEmptyMessage(meals.isEmpty())
         }
 
         viewModel.mealInfo.observe(this) { meals ->
             adapter.updateList(meals)
+            toggleEmptyMessage(meals.isEmpty())
         }
 
         viewModel.errorEvent.observe(this) { errorMessage ->
@@ -175,5 +178,9 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
             R.id.categoryGoatButton -> binding.categoryGoatButton
             else -> throw IllegalArgumentException("Button ID not found: $buttonId")
         }
+    }
+
+    private fun toggleEmptyMessage(isEmpty: Boolean) {
+        binding.emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }
