@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         userEmail = intent.getStringExtra("email") ?: ""
