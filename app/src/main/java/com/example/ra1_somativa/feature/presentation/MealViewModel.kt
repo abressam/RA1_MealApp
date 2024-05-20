@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.ra1_somativa.feature.data.api.MealService
 import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.feature.data.model.MealDetails
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MealViewModel : ViewModel() {
@@ -22,13 +21,22 @@ class MealViewModel : ViewModel() {
     val mealDetailsInfo: LiveData<List<MealDetails>>
         get() = _mealDetailsInfo
 
+    private val _mealInfo: MutableLiveData<List<Meal>> = MutableLiveData()
+    val mealInfo: LiveData<List<Meal>>
+        get() = _mealInfo
+
+    private val _errorEvent: MutableLiveData<String> = MutableLiveData()
+    val errorEvent: LiveData<String>
+        get() = _errorEvent
+
     fun fetchDataByCategory(category: String) {
         viewModelScope.launch() {
             try {
                 val data = mealService.getMealsByCategory(category)
                 _mealListInfo.value = data
             } catch (e: Exception) {
-                // Handle error or show error message
+                _mealListInfo.value = emptyList()
+                _errorEvent.value = "Failed to fetch meals by category"
             }
         }
     }
@@ -39,7 +47,27 @@ class MealViewModel : ViewModel() {
                 val dataId = mealService.getMealId(id)
                 _mealDetailsInfo.value = dataId
             } catch (e: Exception) {
-                // Handle error or show error message
+                _mealDetailsInfo.value = emptyList()
+                _errorEvent.value = "Failed to fetch meal details"
+            }
+        }
+    }
+
+    fun fetchDataByFirstLetter(letter: String) {
+        viewModelScope.launch {
+            try {
+                val data = mealService.getMealByFirstLetter(letter)
+
+                if (data.isNullOrEmpty()) {
+                    _mealInfo.postValue(emptyList())
+                    _errorEvent.value = "No meals found"
+                } else {
+                    _mealInfo.postValue(data)
+                }
+
+            } catch (e: Exception) {
+                _mealInfo.value = emptyList()
+                _errorEvent.value = "Failed to fetch meals by first letter"
             }
         }
     }

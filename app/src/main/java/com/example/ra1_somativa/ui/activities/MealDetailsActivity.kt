@@ -56,23 +56,41 @@ class MealDetailsActivity : AppCompatActivity() {
         }
 
         binding.likeButton.setOnClickListener {
-            if (mealId != null && userId != null) {
-                // Chamando toggleMealFavoriteStatus
-                favoriteMealViewModel.toggleMealFavoriteStatus(mealId)
+            mealId?.let { id ->
+                if (userId != null) {
+                    val preferenceKey = "isMealLiked_$id"
 
-                // Atualizar o estado do botão somente após a operação ser concluída com sucesso
-                favoriteMealViewModel.isMealLiked.observe(this) { isLiked ->
-                    isLiked?.let {
-                        updateLikeButtonState(it)
-                        sharedPreferences.edit().putBoolean("isMealLiked", it).apply()
-                    }
+                    // Verifique o estado atual desta receita
+                    val isCurrentlyLiked = sharedPreferences.getBoolean(preferenceKey, false)
+
+                    // Inverta o estado atual
+                    val newLikeState = !isCurrentlyLiked
+
+                    // Atualize o estado do botão e salve-o nas preferências
+                    updateLikeButtonState(newLikeState)
+                    sharedPreferences.edit().putBoolean(preferenceKey, newLikeState).apply()
+
+                    favoriteMealViewModel.toggleMealFavoriteStatus(id)
                 }
             }
         }
 
         // Restaurar o estado do botão ao abrir a Activity
-        val isMealLiked = sharedPreferences.getBoolean("isMealLiked", false)
-        updateLikeButtonState(isMealLiked)
+        mealId?.let { id ->
+            val preferenceKey = "isMealLiked_$id"
+            val isMealLiked = sharedPreferences.getBoolean(preferenceKey, false)
+            updateLikeButtonState(isMealLiked)
+        }
+
+        // Observar mudanças no estado de 'isMealLiked' somente após a operação ser concluída com sucesso
+        favoriteMealViewModel.isMealLiked.observe(this) { isLiked ->
+            isLiked?.let {
+                mealId?.let { id ->
+                    val preferenceKey = "isMealLiked_$id"
+                    sharedPreferences.edit().putBoolean(preferenceKey, it).apply()
+                }
+            }
+        }
     }
 
     private fun updateLikeButtonState(isLiked: Boolean) {

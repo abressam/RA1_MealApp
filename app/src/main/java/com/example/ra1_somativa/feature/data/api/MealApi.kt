@@ -10,6 +10,9 @@ internal interface MealApi {
     @GET("filter.php")
     suspend fun getMealByCategory(@Query("c") category: String): MealResponse
 
+    @GET("search.php")
+    suspend fun getMealByFirstLetter(@Query("f") letter: String): MealResponse
+
     @GET("lookup.php")
     suspend fun getMealById(@Query("i") mealId: String): MealDetailsResponse
 }

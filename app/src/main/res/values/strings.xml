@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">RA1_somativa</string>
-    <string name="passwordEditText">Senha</string>
-    <string name="confirmPasswordEditText">Confirmar senha</string>
-    <string name="registerButton">Cadastrar</string>
+    <string name="passwordEditText">Password</string>
+    <string name="confirmPasswordEditText">Confirm Password</string>
+    <string name="registerButton">Sign Up</string>
     <string name="emailEditText">E-mail</string>
-    <string name="usernameEditText">Nome completo</string>
-    <string name="registerText">Cadastre-se!</string>
-    <string name="loginText">Bem-vindo!</string>
-    <string name="loginButton">Entrar</string>
-    <string name="goToLogin">Clique aqui!</string>
-    <string name="goToLoginTextview">Já possui cadastro?</string>
-    <string name="goToSignUpTextview">Não possui cadastro?</string>
-    <string name="goToSignUp">Cadastre-se aqui!</string>
+    <string name="usernameEditText">Full Name</string>
+    <string name="registerText">Sign Up!</string>
+    <string name="loginText">Welcome!</string>
+    <string name="loginButton">Sign In</string>
+    <string name="goToLogin">Click here!</string>
+    <string name="goToLoginTextview">Already have a register?</string>
+    <string name="goToSignUpTextview">Do not have a register?</string>
+    <string name="goToSignUp">Sign Up here!</string>
     <string name="meal">Meal</string>
     <string name="goat">Goat</string>
     <string name="breakfast">Breakfast</string>
@@ -27,11 +27,12 @@
     <string name="chicken">Chicken</string>
     <string name="beef">Beef</string>
     <string name="side">Side</string>
-    <string name="instructions_details">Preheat oven to 350° F. Spray a 9x13-inch baking pan with non-stick spray.\\r\\nCombine soy sauce Enjoy!</string>
+    <string name="instructions_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut elit interdum, elementum justo quis, malesuada tortor.</string>
     <string name="back">Back</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="like">Like</string>
     <string name="favorite">Favorites</string>
     <string name="my_favorite_recipes">My Favorite Recipes</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="title">Cookbook Discovery</string>
+    <string name="categories">Categories</string>
 </resources>

@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
         userViewModel.getUserByEmail(email).observe(this) { existingUser ->
             if (existingUser != null) {
                 AlertDialog.Builder(this)
-                    .setTitle("Erro")
-                    .setMessage("O usuário já existe")
+                    .setTitle("Error")
+                    .setMessage("User already exists!")
                     .setPositiveButton("OK", null)
                     .show()
 
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity() {
                 userViewModel.insert(newUser)
 
                 AlertDialog.Builder(this)
-                    .setTitle("Bem-vindo")
-                    .setMessage("O usuário foi cadastrado com sucesso!")
+                    .setTitle("Welcome")
+                    .setMessage("User register successfully!")
                     .setPositiveButton("OK") { dialog, _ ->
                         dialog.cancel()
 

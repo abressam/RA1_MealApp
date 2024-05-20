@@ -1,21 +1,24 @@
 package com.example.ra1_somativa.ui.activities
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import com.example.ra1_somativa.R
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.ra1_somativa.R
 import com.example.ra1_somativa.databinding.ActivityHomeBinding
-import com.example.ra1_somativa.feature.data.model.Meal
-import com.example.ra1_somativa.feature.presentation.MealViewModel
-import com.example.ra1_somativa.ui.adapter.MealAdapter
-import android.content.Intent
 import com.example.ra1_somativa.feature.data.application.UserApplication
+import com.example.ra1_somativa.feature.data.model.Meal
 import com.example.ra1_somativa.feature.data.model.UserDataManager
+import com.example.ra1_somativa.feature.presentation.MealViewModel
 import com.example.ra1_somativa.feature.presentation.UserViewModel
 import com.example.ra1_somativa.feature.presentation.UserViewModelFactory
+import com.example.ra1_somativa.ui.adapter.MealAdapter
+
 
 class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
 
@@ -89,6 +92,38 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
         viewModel.mealListInfo.observe(this) { meals ->
             adapter.updateList(meals)
         }
+
+        viewModel.mealInfo.observe(this) { meals ->
+            adapter.updateList(meals)
+        }
+
+        viewModel.errorEvent.observe(this) { errorMessage ->
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+
+        val searchView = binding.searchMeal
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    deselectAllButtons()
+                    val firstLetter = query[0].toString()
+                    viewModel.fetchDataByFirstLetter(firstLetter)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()) {
+                    deselectAllButtons()
+                    val firstLetter = newText[0].toString()
+                    viewModel.fetchDataByFirstLetter(firstLetter)
+                }
+                return true
+            }
+        })
     }
 
     override fun onItemClick(meal: Meal) {
@@ -107,10 +142,17 @@ class HomeActivity : AppCompatActivity(), MealAdapter.OnItemClickListener {
         categoryButtonMap.keys.forEach { id ->
             val button = getButtonById(id)
             if (id == buttonId) {
-                button.setBackgroundResource(R.color.white)
+                button.setTextColor(ContextCompat.getColor(this, R.color.purple))
             } else {
-                button.setBackgroundResource(R.color.black)
+                button.setTextColor(ContextCompat.getColor(this, R.color.light_gray))
             }
+        }
+    }
+
+    private fun deselectAllButtons() {
+        categoryButtonMap.keys.forEach { id ->
+            val button = getButtonById(id)
+            button.setTextColor(ContextCompat.getColor(this, R.color.light_gray))
         }
     }
 
